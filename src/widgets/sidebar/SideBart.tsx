@@ -10,7 +10,7 @@ export default function SideBar() {
     return (
         <div className="w-72 h-screen bg-black p-4 border-r border-zinc-500/50">
             <Button className="flex flex-row gap-4 items-center cursor-pointer p-2">
-                <p className="text-[18px] text-black font-extrabold bg-[#EF33E7] 
+                <p className="text-[18px] text-black font-extrabold bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75%
                      w-8 h-8 flex  justify-center items-center rounded-full">M</p>
                 <p className="text-xl font-bold tracking-tighter">minify</p>
             </Button>
@@ -20,7 +20,7 @@ export default function SideBar() {
                     <Button className="flex flex-row items-center w-full mb-1 gap-4
                                     rounded-[10px] cursor-pointer p-2 text-[14px] text-white/70
                                     hover:bg-gray-900 hover:text-white focus:bg-gray-800 focus:text-white">
-                        <Icon icon={Heart} color="#FF6BE7" size={16} />
+                        <Icon icon={Heart} color="#FF6BE7" fill="#FF6BE7" size={16} />
                         Liked Songs
                     </Button>
                     {mockData.map((item, index) => (
