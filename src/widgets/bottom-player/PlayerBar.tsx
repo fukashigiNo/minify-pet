@@ -1,8 +1,10 @@
 "use client"
 import { Button, Icon } from "@/components/global"
 import { Play, Pause, SkipForward, SkipBack } from "lucide-react"
+import { useState } from "react"
 
 export default function PlayerBar ()  {
+    const [play, setPlay] = useState(false)
   return (
     <div className="fixed flex items-center justify-around px-30 bottom-0 left-0 w-full h-18 bg-[#110d1bff] border-t border-zinc-500/50">
         <div className="flex items-center  gap-4">
@@ -16,8 +18,11 @@ export default function PlayerBar ()  {
             <Button className="cursor-pointer">
                 <Icon icon={SkipBack} size={16} color="#FFFFFF"/>
             </Button>
-            <Button className="cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75% p-3 rounded-full">
-                <Icon icon={Play} size={19} color="black" fill="black" />
+            <Button 
+                handlePress={() => setPlay(!play)}
+                className="cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75% p-3 rounded-full">
+                {play ? <Icon icon={Pause} size={19} color="black" fill="black" /> : 
+                <Icon icon={Play} size={19} color="black" fill="black" />}
             </Button>
             <Button className="cursor-pointer">
                 <Icon icon={SkipForward} size={16} color="#FFFFFF"/>
