@@ -1,107 +1,35 @@
 import { Hero } from "@/widgets/hero"
+import { supabaseClient } from "@/utils/supabase"
 
 interface IPlaylistHero {
     params: Promise<{id: string}>
 }
 
-const mockData1 = [
-    {
-        photo: "kjsdkfsdfx",
-        id: 1,
-        trackName: "Appolon",
-        trackAuthor: "Tom Ruy",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 2,
-        trackName: "Cronos",
-        trackAuthor: "Piro Go",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 3,
-        trackName: "Your luv",
-        trackAuthor: "Lumen kai",
-        trackLength: "3:24"
-    }, 
-]
-
-
-const mockData2 = [
-    {
-        photo: "kjsdkfsdfx",
-        id: 1,
-        trackName: "Midnight bloom",
-        trackAuthor: "Nova Rea",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 2,
-        trackName: "Amber",
-        trackAuthor: "Sol Vega",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 3,
-        trackName: "Paper Skies",
-        trackAuthor: "Lumen",
-        trackLength: "3:24"
-    }, 
-]
-
-const mockData3= [
-    {
-        photo: "kjsdkfsdfx",
-        id: 1,
-        trackName: "Scream",
-        trackAuthor: "Nova Rea",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 2,
-        trackName: "Amber",
-        trackAuthor: "Sol Vega",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 3,
-        trackName: "Paper Skies",
-        trackAuthor: "Lumen",
-        trackLength: "3:24"
-    }, 
-]
-
-const mockData4 = [
-    {
-        photo: "kjsdkfsdfx",
-        id: 1,
-        trackName: "Midnight bloom",
-        trackAuthor: "Nova Rea",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 2,
-        trackName: "Amber",
-        trackAuthor: "Sol Vega",
-        trackLength: "3:24"
-    }, {
-        photo: "kjsdkfsdfx",
-        id: 3,
-        trackName: "Paper Skies",
-        trackAuthor: "Lumen",
-        trackLength: "3:24"
-    }, 
-]
-
 export default async function PlaylistHero({params}: IPlaylistHero) {
     const {id} = await params
 
-    if (id === "loser-club") return <Hero playlistId={id} playlistName="Loser club-" tracks={mockData1} sumTracks="3 tracks" />
+    const {data: Playlist , error} =await supabaseClient
+            .from("playlist")
+            .select("*")
+            .eq("playlist_id", id)
+            .single()
 
-    if(id === "wntr") return <Hero playlistId={id} playlistName="WNTR" tracks={mockData2} sumTracks="3 tracks" />
+    if(error || !Playlist) {
+        return (
+        <div className="flex flex-col items-center justify-center w-full">
+            <p className="text-4xl text-white">404</p>
+            <p className="text-xl text-white">Playlist not found</p>
+        </div>
+    )
+    }
 
-    if(id === "something-sad") return  <Hero playlistId={id} playlistName="Something sad" tracks={mockData3} sumTracks="3 tracks" />
-
-    if(id === "vibe") return  <Hero playlistId={id} playlistName="VIBE" tracks={mockData4} sumTracks="3 tracks" />
+return (
+    <Hero
+        playlistId={id}
+        playlistName={Playlist.name}
+        tracks={Playlist.tracks}
+        sumTracks={"3 tracks"}
+    />
+    )
 
 }
