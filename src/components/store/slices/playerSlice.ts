@@ -1,6 +1,30 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
+interface ITrack {
+    id: number;
+    trackName: string;
+    trackAuthor: string;
+    trackLength: string;
+    photo?: string; // на случай, если есть обложка
+    src: string;
+}
+
+// 2. Описываем структуру action.payload для setCurrentTrack
+interface ISetTrackPayload {
+    track: ITrack;
+    playlist: ITrack[];
+    index: number;
+}
+
+// 3. Описываем начальное состояние стейта
+interface IPlayerState {
+    currentTrack: ITrack | null;
+    queue: ITrack[];
+    isPlaying: boolean;
+    currentTrackIndex: number;
+}
+
+const initialState: IPlayerState = {
     currentTrack: null,
     queue: [],
     isPlaying: false,
@@ -11,7 +35,7 @@ export const  playerSlice = createSlice({
     name: "playerSlice",
     initialState: initialState,
     reducers: {
-        setCurrentTrack (state, action) {
+        setCurrentTrack (state, action: PayloadAction<ISetTrackPayload>) {
             state.currentTrack = action.payload.track
             state.queue = action.payload.playlist
             state.currentTrackIndex = action.payload.index
@@ -20,7 +44,7 @@ export const  playerSlice = createSlice({
         setIsPlaying(state) {
             state.isPlaying = !state.isPlaying
         },
-        nextTrack(state, action) {
+        nextTrack(state) {
             const nextTrack = state.currentTrackIndex + 1
             if (nextTrack < state.queue.length) {
                 state.currentTrackIndex = nextTrack
