@@ -6,7 +6,8 @@ interface IMusic {
     id: number,
     trackName: string,
     trackAuthor: string,
-    trackLength: string
+    trackLength: string,
+    handlePress: () => void
 }
 
 
@@ -14,11 +15,13 @@ export default function MusicCard({
     id,
     trackName,
     trackAuthor,
-    trackLength
+    trackLength,
+    handlePress
 }: IMusic) {
     return (
         <div className="flex justify-between mt-5 bg-[#110d1bff] p-4
                 border-b border-zinc-500/50 rounded-t-[10px]  hover:bg-[#1d182bff]"
+                onClick={() => handlePress()}
             >
                 <div className="flex items-center gap-3">
                     <div>
