@@ -2,13 +2,34 @@
 import { Button, Icon } from "@/components/global"
 import { Play, Pause, SkipForward, SkipBack } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/components/store/hooks"
-import { previousTrack, nextTrack } from "@/components/store/slices"
-import { useState } from "react"
+import { previousTrack, nextTrack, setIsPlaying } from "@/components/store/slices"
+import { audioEngine } from "@/services"
+import { useEffect } from "react"
 
 export default function PlayerBar ()  {
-    const [play, setPlay] = useState(false)
     const track = useAppSelector(state => state.playerSlice.currentTrack)
+    const isPlaying = useAppSelector(state => state.playerSlice.isPlaying)
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if(!track?.src) return
+
+        async function startAudio() {
+            await audioEngine.loadTrack(track!.src);
+            audioEngine.play()
+        }
+
+        startAudio()
+    }, [track?.src])
+
+    const handleToggle = () => {
+        if (isPlaying) {
+            audioEngine.pause()
+        } else {
+            audioEngine.play()
+        }
+        dispatch(setIsPlaying())
+    }
 
     if(!track) return null
 
@@ -21,24 +42,15 @@ export default function PlayerBar ()  {
                 <p className="text-[12px] text-white/60">{track.trackAuthor}</p>
             </div>
         </div>
-        {/* Вставь этот тег внутри разметки, например, рядом с кнопками */}
-    <audio 
-        src={track?.src} 
-        autoPlay 
-        ref={(audioRef) => {
-            if (audioRef) {
-                play ? audioRef.play() : audioRef.pause();
-            }
-        }}
-    />
+
         <div className="flex items-center gap-6">
             <Button className="cursor-pointer" handlePress={() => dispatch(previousTrack())}>
                 <Icon icon={SkipBack} size={16} color="#FFFFFF"/>
             </Button>
             <Button 
-                handlePress={() => setPlay(!play)}
+                handlePress={() => {handleToggle()}}
                 className="cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75% p-3 rounded-full">
-                {play ? <Icon icon={Pause} size={19} color="black" fill="black" /> : 
+                {isPlaying ? <Icon icon={Pause} size={19} color="black" fill="black" /> : 
                 <Icon icon={Play} size={19} color="black" fill="black" />}
             </Button>
             <Button className="cursor-pointer " handlePress={() => dispatch(nextTrack())}>
