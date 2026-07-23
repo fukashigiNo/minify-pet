@@ -7,6 +7,7 @@ class AudioEngine {
     private startTime: number = 0;
     private pauseOffset: number = 0;
     private isPlaying: boolean = false
+    private onEndedCallback: (() => void) | null = null
 
     constructor() {}
 
@@ -18,6 +19,10 @@ class AudioEngine {
         };
         this.pauseOffset = 0;
         this.isPlaying = false;
+    }
+
+    setOnEnded(callback: () => void): void {
+        this.onEndedCallback = callback
     }
 
     private initCtx() {
@@ -62,6 +67,12 @@ class AudioEngine {
         this.currentSource.buffer = this.audioBuffer
         this.currentSource.connect(this.gainNode)
 
+        this.currentSource.onended = () => {
+            if(this.isPlaying && this.onEndedCallback) {
+                this.onEndedCallback()
+            }
+        }
+
         this.startTime = this.ctx.currentTime - startOffset
         this.currentSource.start(0, startOffset)
         this.isPlaying = true
@@ -93,6 +104,7 @@ class AudioEngine {
             this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, volume)), this.ctx.currentTime)
         }
     }
+
 
     getCurrentTime():number {
         if(!this.ctx || !this.audioBuffer) return 0;
