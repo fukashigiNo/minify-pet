@@ -14,6 +14,11 @@ export default function PlayerBar ()  {
     useEffect(() => {
         if(!track?.src) return
 
+        audioEngine.setOnEnded(() => {
+            dispatch(nextTrack())
+            }
+        )
+
         async function startAudio() {
             await audioEngine.loadTrack(track!.src);
             audioEngine.play()
