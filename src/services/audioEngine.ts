@@ -95,8 +95,16 @@ class AudioEngine {
         this.pauseOffset = clampedTime;
 
         if(this.isPlaying) {
-            this.play(clampedTime)
+            if(this.currentSource) {
+                this.currentSource.onended = null
+                try {
+                    this.currentSource.stop();
+                } catch (e) {
+                    console.error("STOPPED" , e)
+                }
+            } 
         }
+        this.play(clampedTime)
     }
 
     setVolume(volume: number):void {
