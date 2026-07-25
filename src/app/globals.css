@@ -19,6 +19,27 @@
   }
 }
 
+@layer utilities {
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent; 
+    border-radius: 10px; 
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #555; 
+    border-radius: 10px; 
+    border: 2px solid #110d1bff; 
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: #EF33E7; 
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
