@@ -1,3 +1,4 @@
+```bash
 # Правила коммитов
 
 =============================================
@@ -27,6 +28,7 @@ SACJ — System of Accurate Commits from Junior
 • S-D: Удалил системный файл/конфиг (Дальше ваше сообщение что сделали)
 • C-FT: Создал новый файл под конкретную фичу (Дальше ваше сообщение что сделали)
 ===============================================
+```
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
