@@ -24,7 +24,7 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
     const dispatch = useAppDispatch()
   return (
     <div 
-        className="flex flex-col items-center justify-center p-10 w-[80%] mx-auto" 
+        className="flex flex-col items-center justify-start p-10 w-[80%] mx-auto" 
         id={playlistId}
     >
         <div className="w-[60%] flex justify-between items-center mb-3">
@@ -39,7 +39,7 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
             className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none focus:ring-0" 
             />
         </div>
-        <div className="flex-1 overflow-y-auto pb-32 w-[60%] h-40 ">
+        <div className="w-[60%] max-h-[400px] overflow-y-auto scrollbar-custom pr-2 flex flex-col gap-2">
             {tracks.map((item, index) => (
                 <MusicCard 
                 key={item.id} 
