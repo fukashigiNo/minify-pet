@@ -1,14 +1,16 @@
 "use client"
-import { Button, Icon } from "@/components/global"
+import { Button, Icon, SeekBar } from "@/components/global"
 import { Play, Pause, SkipForward, SkipBack } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/components/store/hooks"
 import { previousTrack, nextTrack, setIsPlaying } from "@/components/store/slices"
 import { audioEngine } from "@/services"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function PlayerBar ()  {
     const track = useAppSelector(state => state.playerSlice.currentTrack)
     const isPlaying = useAppSelector(state => state.playerSlice.isPlaying)
+    const [currentTime, setCurrentTIme] = useState(0)
+    const [duration, setDuration] = useState(0)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -22,10 +24,21 @@ export default function PlayerBar ()  {
         async function startAudio() {
             await audioEngine.loadTrack(track!.src);
             audioEngine.play()
+            setDuration(audioEngine.getDuration())
         }
 
         startAudio()
     }, [track?.src])
+
+    useEffect(() => {
+        if(!isPlaying) return
+
+        const interval = setInterval(() => {
+            setCurrentTIme(audioEngine.getCurrentTime())
+        }, 200)
+
+        return () => clearInterval(interval)
+    }, [isPlaying])
 
     const handleToggle = () => {
         if (isPlaying) {
@@ -47,6 +60,15 @@ export default function PlayerBar ()  {
                 <p className="text-[12px] text-white/60">{track.trackAuthor}</p>
             </div>
         </div>
+
+        <SeekBar
+            currentTime={currentTime}
+            duration={duration}
+            seek={(newTime) => {
+                setCurrentTIme(newTime)
+                audioEngine.seek(newTime)
+            }}
+        />
 
         <div className="flex items-center gap-6">
             <Button className="cursor-pointer" handlePress={() => dispatch(previousTrack())}>
