@@ -1,23 +1,31 @@
 "use client"
 import { Button, Icon, SeekBar } from "@/components/global"
-import { Play, Pause, SkipForward, SkipBack } from "lucide-react"
+import { Play, Pause, SkipForward, SkipBack, Repeat } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/components/store/hooks"
-import { previousTrack, nextTrack, setIsPlaying } from "@/components/store/slices"
+import { previousTrack, nextTrack, setIsPlaying, setIsLooped } from "@/components/store/slices"
 import { audioEngine } from "@/services"
 import { useEffect, useState } from "react"
 
 export default function PlayerBar ()  {
     const track = useAppSelector(state => state.playerSlice.currentTrack)
     const isPlaying = useAppSelector(state => state.playerSlice.isPlaying)
+    const isLoop = useAppSelector(state => state.playerSlice.isLooped)
     const [currentTime, setCurrentTIme] = useState(0)
     const [duration, setDuration] = useState(0)
     const dispatch = useAppDispatch()
+
+    const toggleLoop = () => {
+        const nextState = !isLoop
+        dispatch(setIsLooped())
+        audioEngine.setIsLooped(nextState)
+    }
 
     useEffect(() => {
         if(!track?.src) return
 
         audioEngine.setOnEnded(() => {
-            dispatch(nextTrack())
+                audioEngine.play(0)
+                dispatch(nextTrack())
             }
         )
 
@@ -82,6 +90,10 @@ export default function PlayerBar ()  {
             </Button>
             <Button className="cursor-pointer " handlePress={() => dispatch(nextTrack())}>
                 <Icon icon={SkipForward} size={16} color="#FFFFFF"/>
+            </Button>
+            <Button className="cursor-pointer" handlePress={toggleLoop}>
+                {isLoop ? <Icon icon={Repeat} color="#FF6BE7" size={16} /> :
+                <Icon icon={Repeat} color="white" size={16} /> }
             </Button>
         </div>
     </div>
