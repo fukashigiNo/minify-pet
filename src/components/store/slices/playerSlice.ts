@@ -5,22 +5,23 @@ interface ITrack {
     trackName: string;
     trackAuthor: string;
     trackLength: string;
-    photo?: string; // на случай, если есть обложка
+    photo?: string; 
     src: string;
 }
 
-// 2. Описываем структуру action.payload для setCurrentTrack
+
 interface ISetTrackPayload {
     track: ITrack;
     playlist: ITrack[];
     index: number;
 }
 
-// 3. Описываем начальное состояние стейта
+
 interface IPlayerState {
     currentTrack: ITrack | null;
     queue: ITrack[];
     isPlaying: boolean;
+    isLooped: boolean;
     currentTrackIndex: number;
 }
 
@@ -28,6 +29,7 @@ const initialState: IPlayerState = {
     currentTrack: null,
     queue: [],
     isPlaying: false,
+    isLooped: false,
     currentTrackIndex: 0
 }
 
@@ -43,6 +45,9 @@ export const  playerSlice = createSlice({
         },
         setIsPlaying(state) {
             state.isPlaying = !state.isPlaying
+        },
+        setIsLooped(state) {
+            state.isLooped = !state.isLooped
         },
         nextTrack(state) {
             const nextTrack = state.currentTrackIndex + 1
@@ -72,7 +77,8 @@ export const {
  setCurrentTrack,
 setIsPlaying,
 nextTrack,
-previousTrack
+previousTrack,
+setIsLooped
 } = playerSlice.actions
 
 export default playerSlice.reducer
