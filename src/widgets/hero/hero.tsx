@@ -39,7 +39,7 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
             className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none focus:ring-0" 
             />
         </div>
-        <div className="w-[60%] max-h-[400px] overflow-y-auto scrollbar-custom pr-2 flex flex-col gap-2">
+        <div className="w-[60%] max-h-[500px] overflow-y-auto scrollbar-custom pr-2 flex flex-col gap-2">
             {tracks.map((item, index) => (
                 <MusicCard 
                 key={item.id} 
