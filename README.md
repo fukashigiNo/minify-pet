@@ -3,7 +3,6 @@
 
 =============================================
 СТКД — Система Точных Коммитов от Джуна
-SACJ — System of Accurate Commits from Junior
 =============================================
 
 БАЗОВЫЕ ПРЕФИКСЫ:
@@ -27,6 +26,36 @@ SACJ — System of Accurate Commits from Junior
 • M-F: Изменил файл и попутно исправил в нем баг (Дальше ваше сообщение что сделали)
 • S-D: Удалил системный файл/конфиг (Дальше ваше сообщение что сделали)
 • C-FT: Создал новый файл под конкретную фичу (Дальше ваше сообщение что сделали)
+===============================================
+
+
+
+
+BASE PREFIXES:
+• C: (Created) — File creation (Followed by your commit description)
+• A: (Added) — Added a library file or dependency (Followed by your commit description)
+• M: (Modified) — File modification (Followed by your commit description)
+• R: (Rewrite) — Complete file rewrite (Followed by your commit description)
+• E: (Error) — Known issue or error handling (Followed by your commit description)
+• D: (Deleted) — File deletion (Followed by your commit description)
+• F: (Fixed) — Bug fix (Followed by your commit description)
+• FT: (Feature) — Feature implementation with a specific name (Followed by your commit description)
+• S: (System) — System or configuration files (Followed by your commit description)
+
+
+===============================================
+SACJ — System of Accurate Commits from Junior
+===============================================
+
+COMBINATION RULES:
+
+Combining prefixes is allowed for precise descriptions, but NO MORE than 3 characters total in a single combination chain.
+
+Examples:
+• M-F: Modified a file and fixed a bug in it (Followed by your commit description)
+• S-D: Deleted a system file/config (Followed by your commit description)
+• C-FT: Created a new file for a specific feature (Followed by your commit description)
+
 ===============================================
 ```
 
