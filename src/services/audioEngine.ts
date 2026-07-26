@@ -8,6 +8,7 @@ class AudioEngine {
     private pauseOffset: number = 0;
     private isPlaying: boolean = false
     private onEndedCallback: (() => void) | null = null
+    isLooped: boolean = false
 
     constructor() {}
 
@@ -68,7 +69,9 @@ class AudioEngine {
         this.currentSource.connect(this.gainNode)
 
         this.currentSource.onended = () => {
-            if(this.isPlaying && this.onEndedCallback) {
+            if(this.isLooped) {
+                this.play(0)
+            }else if(this.isPlaying && this.onEndedCallback) {
                 this.onEndedCallback()
             }
         }
@@ -113,6 +116,9 @@ class AudioEngine {
         }
     }
 
+    setIsLooped(value: boolean) {
+        this.isLooped = value
+    }
 
     getCurrentTime():number {
         if(!this.ctx || !this.audioBuffer) return 0;
