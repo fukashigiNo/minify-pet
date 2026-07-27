@@ -9,6 +9,7 @@ class AudioEngine {
     private isPlaying: boolean = false
     private onEndedCallback: (() => void) | null = null
     isLooped: boolean = false
+    private volume: number = 1 
 
     constructor() {}
 
@@ -111,6 +112,9 @@ class AudioEngine {
     }
 
     setVolume(volume: number):void {
+        const clamped = Math.max(0, Math.min(1, volume))
+        this.volume = clamped;
+
         if(this.gainNode && this.ctx) {
             this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, volume)), this.ctx.currentTime)
         }
@@ -134,6 +138,10 @@ class AudioEngine {
 
     getIsPlaying(): boolean {
         return this.isPlaying
+    }
+
+    getVolume(): number {
+        return this.volume
     }
 }
 
