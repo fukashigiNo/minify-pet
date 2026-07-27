@@ -30,7 +30,7 @@ export default function MusicCard({
                     <div className="flex gap-3">
                         <div className="w-12 h-12 bg-radial-[at_25%_25%] from-[#FFFFFF]  to-[#EF33E7] to-75% rounded-[10px]" />
                         <div className="flex flex-col justify-center">
-                            <p className="text-[15px] font-bold">{trackName}</p>
+                            <p className="text-[15px] font-bold text-white">{trackName}</p>
                             <p className="text-[12px] text-white/60">{trackAuthor}</p>
                         </div>
                     </div>
