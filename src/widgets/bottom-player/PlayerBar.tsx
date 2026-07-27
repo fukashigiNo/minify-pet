@@ -64,7 +64,7 @@ export default function PlayerBar ()  {
         <div className="flex items-center  gap-4">
             <div className="w-12 h-12 bg-radial-[at_25%_25%] from-[#FFFFFF]  to-[#EF33E7] to-75% rounded-[10px]" />
             <div>
-                <p className="text-[15px] font-bold">{track.trackName}</p>
+                <p className="text-[15px] font-bold text-white ">{track.trackName}</p>
                 <p className="text-[12px] text-white/60">{track.trackAuthor}</p>
             </div>
         </div>
