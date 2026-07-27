@@ -15,7 +15,7 @@ export default function SideBar() {
             <Button className="flex flex-row gap-4 items-center cursor-pointer p-2">
                 <p className="text-[18px] text-black font-extrabold bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75%
                      w-8 h-8 flex  justify-center items-center rounded-full">M</p>
-                <p className="text-xl font-bold tracking-tighter">minify</p>
+                <p className="text-xl font-bold tracking-tighter text-white">minify</p>
             </Button>
             <div className="mt-8">
                 <p className="text-[13px] text-gray-300/65 tracking-wide font-semibold p-2">PLAYLISTS</p>
