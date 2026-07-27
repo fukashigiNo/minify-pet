@@ -1,6 +1,6 @@
 "use client"
-import { Button, Icon, SeekBar } from "@/components/global"
-import { Play, Pause, SkipForward, SkipBack, Repeat } from "lucide-react"
+import { Button, Icon, SeekBar, VolumeBar } from "@/components/global"
+import { Play, Pause, SkipForward, SkipBack, Repeat, VolumeX, Volume1 } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/components/store/hooks"
 import { previousTrack, nextTrack, setIsPlaying, setIsLooped } from "@/components/store/slices"
 import { audioEngine } from "@/services"
@@ -10,8 +10,10 @@ export default function PlayerBar ()  {
     const track = useAppSelector(state => state.playerSlice.currentTrack)
     const isPlaying = useAppSelector(state => state.playerSlice.isPlaying)
     const isLoop = useAppSelector(state => state.playerSlice.isLooped)
-    const [currentTime, setCurrentTIme] = useState(0)
-    const [duration, setDuration] = useState(0)
+    const [volume, setVolume] = useState(audioEngine.getVolume())
+    const [isVolOpen, setIsVolOpen] = useState<boolean>(false)
+    const [currentTime, setCurrentTIme] = useState<number>(0)
+    const [duration, setDuration] = useState<number>(0)
     const dispatch = useAppDispatch()
 
     const toggleLoop = () => {
@@ -24,7 +26,6 @@ export default function PlayerBar ()  {
         if(!track?.src) return
 
         audioEngine.setOnEnded(() => {
-                audioEngine.play(0)
                 dispatch(nextTrack())
             }
         )
@@ -57,6 +58,10 @@ export default function PlayerBar ()  {
         dispatch(setIsPlaying())
     }
 
+    const handleChangeVolume = (newVolume: number) => {
+        setVolume(newVolume);
+        audioEngine.setVolume(newVolume)
+    }
     if(!track) return null
 
   return (
@@ -64,7 +69,7 @@ export default function PlayerBar ()  {
         <div className="flex items-center  gap-4">
             <div className="w-12 h-12 bg-radial-[at_25%_25%] from-[#FFFFFF]  to-[#EF33E7] to-75% rounded-[10px]" />
             <div>
-                <p className="text-[15px] font-bold text-white ">{track.trackName}</p>
+                <p className="text-[15px] font-bold text-white">{track.trackName}</p>
                 <p className="text-[12px] text-white/60">{track.trackAuthor}</p>
             </div>
         </div>
@@ -79,6 +84,15 @@ export default function PlayerBar ()  {
         />
 
         <div className="flex items-center gap-6">
+            <div className="relative flex items-center justify-center">
+                {isVolOpen && <VolumeBar volume={volume} handleVolumeChange={handleChangeVolume} />}
+                <Button 
+                className="cursor-pointer" 
+                handlePress={() => setIsVolOpen(!isVolOpen)}
+                >
+                    <Icon icon={volume === 0 ? VolumeX : Volume1 } size={16} color={isVolOpen ? "#EF33E7" : "white"}/>
+                </Button>
+            </div>
             <Button className="cursor-pointer" handlePress={() => dispatch(previousTrack())}>
                 <Icon icon={SkipBack} size={16} color="#FFFFFF"/>
             </Button>
