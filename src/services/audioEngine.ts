@@ -12,7 +12,6 @@ class AudioEngine {
     private volume: number = 1 
 
     constructor() {}
-
     stop(): void {
         if(this.currentSource) {
             this.currentSource.stop();
@@ -108,9 +107,9 @@ class AudioEngine {
                 } catch (e) {
                     console.error("STOPPED" , e)
                 }
-            } 
+            }
+            this.play(clampedTime)
         }
-        this.play(clampedTime)
     }
 
     setVolume(volume: number):void {
