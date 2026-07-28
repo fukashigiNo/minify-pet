@@ -70,10 +70,12 @@ class AudioEngine {
         this.currentSource.connect(this.gainNode)
 
         this.currentSource.onended = () => {
-            if(this.isLooped) {
-                this.play(0)
-            }else if(this.isPlaying && this.onEndedCallback) {
-                this.onEndedCallback()
+            if(this.isPlaying) {
+                if(this.isLooped) {
+                    this.play(0)
+                }else if(this.isPlaying && this.onEndedCallback) {
+                    this.onEndedCallback()
+                }
             }
         }
 
