@@ -38,7 +38,9 @@ export default function RootLayout({
             {children}
           </div>
 
-          <PlayerBar />
+          <div className="relative">
+            <PlayerBar />
+          </div>
         </body>
       </ReduxProvider>
     </html>
