@@ -65,7 +65,7 @@ export default function PlayerBar ()  {
     if(!track) return null
 
   return (
-    <div className="fixed flex items-center justify-around px-30 bottom-0 left-0 w-full h-18 bg-[#110d1bff] border-t border-zinc-500/50">
+    <div className="fixed flex items-center justify-around px-30 bottom-0 left-0 w-full z-60 h-18 bg-[#110d1bff] border-t border-zinc-500/50">
         <div className="flex items-center  gap-4">
             <div className="w-12 h-12 bg-radial-[at_25%_25%] from-[#FFFFFF]  to-[#EF33E7] to-75% rounded-[10px]" />
             <div>
