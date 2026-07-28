@@ -27,7 +27,7 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
         className="flex flex-col items-center justify-start p-10 w-[80%] mx-auto" 
         id={playlistId}
     >
-        <div className="w-[60%] flex justify-between items-center mb-3">
+        <div className="w-[60%] flex justify-between items-center mb-3 text-white">
             <p className="text-white text-2xl font-bold tracking-tight">{playlistName}</p>
             <p className="text-[12px]">{sumTracks}</p>
         </div>
@@ -36,10 +36,11 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
             <input 
             type="text"
             placeholder="Search artists or tracks" 
-            className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none focus:ring-0" 
+            className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none text-white focus:ring-0"
+            
             />
         </div>
-        <div className="w-[60%] max-h-[500px] overflow-y-auto scrollbar-custom pr-2 flex flex-col gap-2">
+        <div className="w-[60%] max-h-[500px] overflow-y-auto scrollbar-custom mt-4 pr-2 flex flex-col gap-2 rounded-[16px]">
             {tracks.map((item, index) => (
                 <MusicCard 
                 key={item.id} 
