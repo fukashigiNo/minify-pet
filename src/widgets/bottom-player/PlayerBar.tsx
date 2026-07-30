@@ -65,29 +65,45 @@ export default function PlayerBar ()  {
     if(!track) return null
 
   return (
-    <div className="fixed flex items-center justify-around px-30 bottom-0 left-0 w-full z-60 h-18 bg-[#110d1bff] border-t border-zinc-500/50">
-        <div className="flex items-center  gap-4">
-            <div className="w-12 h-12 bg-radial-[at_25%_25%] from-[#FFFFFF]  to-[#EF33E7] to-75% rounded-[10px]" />
-            <div>
-                <p className="text-[15px] font-bold text-white">{track.trackName}</p>
-                <p className="text-[12px] text-white/60">{track.trackAuthor}</p>
+    <div className="fixed flex flex-col md:flex-row items-center justify-around
+            gap-2 md:gap-0 px-3 sm:px-6 md:px-12 lg:px-30
+            py-2 md:py-0 bottom-0 left-0 w-full z-60
+            md:h-18 bg-[#110d1bff] border-t border-zinc-500/50">
+
+        <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto justify-between md:justify-start">
+            <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 bg-radial-[at_25%_25%] from-[#FFFFFF] to-[#EF33E7] to-75% rounded-[10px]" />
+                <div className="min-w-0">
+                    <p className="text-[13px] md:text-[15px] font-bold text-white truncate">{track.trackName}</p>
+                    <p className="text-[11px] md:text-[12px] text-white/60 truncate">{track.trackAuthor}</p>
+                </div>
             </div>
+
+            {/* play/pause доступен и в верхнем ряду на мобильных, чтобы не тянуться далеко */}
+            <Button
+                handlePress={() => {handleToggle()}}
+                className="md:hidden cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7] to-[#EF33E7] to-75% p-2.5 rounded-full shrink-0">
+                {isPlaying ? <Icon icon={Pause} size={16} color="black" fill="black" /> :
+                <Icon icon={Play} size={16} color="black" fill="black" />}
+            </Button>
         </div>
 
-        <SeekBar
-            currentTime={currentTime}
-            duration={duration}
-            seek={(newTime) => {
-                setCurrentTIme(newTime)
-                audioEngine.seek(newTime)
-            }}
-        />
+        <div className="w-full md:w-auto md:flex-1 md:mx-6">
+            <SeekBar
+                currentTime={currentTime}
+                duration={duration}
+                seek={(newTime) => {
+                    setCurrentTIme(newTime)
+                    audioEngine.seek(newTime)
+                }}
+            />
+        </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center justify-center gap-4 sm:gap-5 md:gap-6 w-full md:w-auto">
             <div className="relative flex items-center justify-center">
                 {isVolOpen && <VolumeBar volume={volume} handleVolumeChange={handleChangeVolume} />}
-                <Button 
-                className="cursor-pointer" 
+                <Button
+                className="cursor-pointer"
                 handlePress={() => setIsVolOpen(!isVolOpen)}
                 >
                     <Icon icon={volume === 0 ? VolumeX : Volume1 } size={16} color={isVolOpen ? "#EF33E7" : "white"}/>
@@ -96,13 +112,13 @@ export default function PlayerBar ()  {
             <Button className="cursor-pointer" handlePress={() => dispatch(previousTrack())}>
                 <Icon icon={SkipBack} size={16} color="#FFFFFF"/>
             </Button>
-            <Button 
+            <Button
                 handlePress={() => {handleToggle()}}
-                className="cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7]  to-[#EF33E7] to-75% p-3 rounded-full">
-                {isPlaying ? <Icon icon={Pause} size={19} color="black" fill="black" /> : 
+                className="hidden md:inline-flex cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7] to-[#EF33E7] to-75% p-3 rounded-full">
+                {isPlaying ? <Icon icon={Pause} size={19} color="black" fill="black" /> :
                 <Icon icon={Play} size={19} color="black" fill="black" />}
             </Button>
-            <Button className="cursor-pointer " handlePress={() => dispatch(nextTrack())}>
+            <Button className="cursor-pointer" handlePress={() => dispatch(nextTrack())}>
                 <Icon icon={SkipForward} size={16} color="#FFFFFF"/>
             </Button>
             <Button className="cursor-pointer" handlePress={toggleLoop}>
@@ -113,5 +129,3 @@ export default function PlayerBar ()  {
     </div>
   )
 }
-
-
