@@ -24,23 +24,23 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
     const dispatch = useAppDispatch()
   return (
     <div 
-        className="flex flex-col items-center justify-start p-10 w-[80%] mx-auto" 
+        className="flex flex-col items-center justify-start p-4 sm:p-6 md:p-10 w-full sm:w-[90%] md:w-[80%] mx-auto" 
         id={playlistId}
     >
-        <div className="w-[60%] flex justify-between items-center mb-3 text-white">
-            <p className="text-white text-2xl font-bold tracking-tight">{playlistName}</p>
-            <p className="text-[12px]">{sumTracks}</p>
+        <div className="w-full sm:w-[85%] md:w-[70%] lg:w-[60%] flex justify-between items-center mb-3 text-white gap-2">
+            <p className="text-white text-lg sm:text-xl md:text-2xl font-bold tracking-tight truncate">{playlistName}</p>
+            <p className="text-[11px] sm:text-[12px] text-white/60 shrink-0">{sumTracks}</p>
         </div>
-        <div className="flex items-center p-1 px-4 bg-[#110d1bff] w-[60%] border border-slate-600 rounded-full">
+        <div className="flex items-center p-1 px-3 sm:px-4 bg-[#110d1bff] w-full sm:w-[85%] md:w-[70%] lg:w-[60%] border border-slate-600 rounded-full">
             <Icon icon={Search} size={18} color="white"/>
             <input 
             type="text"
             placeholder="Search artists or tracks" 
-            className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none text-white focus:ring-0"
+            className= " px-2 py-1 w-full bg-transparent outline-none border-none focus:outline-none text-white focus:ring-0 text-sm sm:text-base"
             
             />
         </div>
-        <div className="w-[60%] max-h-[500px] overflow-y-auto scrollbar-custom mt-4 pr-2 flex flex-col gap-2 rounded-[16px]">
+        <div className="w-full h-[90vh] sm:h-auto sm:w-[85%] md:w-[70%] lg:w-[60%] max-h-[90vh] sm:max-h-[450px] md:max-h-[500px] overflow-y-auto scrollbar-custom mt-4 pr-1 sm:pr-2 flex flex-col gap-2 rounded-[16px]">
             {tracks.map((item, index) => (
                 <MusicCard 
                 key={item.id} 
