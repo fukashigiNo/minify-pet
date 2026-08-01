@@ -79,7 +79,6 @@ export default function PlayerBar ()  {
                 </div>
             </div>
 
-            {/* play/pause доступен и в верхнем ряду на мобильных, чтобы не тянуться далеко */}
             <Button
                 handlePress={() => {handleToggle()}}
                 className="md:hidden cursor-pointer bg-radial-[at_25%_25%] from-[#FF6BE7] to-[#EF33E7] to-75% p-2.5 rounded-full shrink-0">
