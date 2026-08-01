@@ -15,7 +15,6 @@ export default function SideBar() {
 
     return (
         <>
-            {/* мобильная кнопка вызова меню */}
             <Button
                 className="md:hidden fixed top-3 left-3 z-50 p-2 bg-black/80 border border-zinc-500/50 rounded-[10px] cursor-pointer"
                 handlePress={() => setIsOpen(true)}
@@ -23,7 +22,6 @@ export default function SideBar() {
                 <Icon icon={Menu} size={20} color="white" />
             </Button>
 
-            {/* затемнение фона на мобильных при открытой панели */}
             {isOpen && (
                 <div
                     className="md:hidden fixed inset-0 bg-black/60 z-40"
@@ -43,7 +41,6 @@ export default function SideBar() {
                         <p className="text-xl font-bold tracking-tighter text-white">minify</p>
                     </Button>
 
-                    {/* кнопка закрытия только на мобильных */}
                     <Button
                         className="md:hidden cursor-pointer p-2"
                         handlePress={() => setIsOpen(false)}
