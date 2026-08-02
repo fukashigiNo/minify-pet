@@ -1,8 +1,12 @@
 "use client"
 import { Button, Icon } from "@/components/global"
-import Link from "next/link";
 import { Heart, Music2, Menu, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useAppDispatch } from "@/components/store/hooks";
+import getDeviseId from "@/utils/get-device-id/getDeviceId";
+import supabseClient from "@/utils/supabase/supabaseClient";
+import { setLikedTracks } from "@/components/store/slices";
+import Link from "next/link";
 
 const mockData = [
     { id: "loser-club", name: "Loser club-" },
@@ -12,6 +16,27 @@ const mockData = [
 ];
 export default function SideBar() {
     const [isOpen, setIsOpen] = useState<boolean>(false)
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const fetchLikes = async () => {
+            const deviceId = getDeviseId();
+            
+
+            const { data } = await supabseClient
+                .from('liked_songs')
+                .select('track_id')
+                .eq('user_id', deviceId);
+
+            if (data) {
+                const ids = data.map(item => item.track_id);
+                dispatch(setLikedTracks(ids)); 
+            }
+        }
+
+        fetchLikes();
+    }, [dispatch]);
 
     return (
         <>
