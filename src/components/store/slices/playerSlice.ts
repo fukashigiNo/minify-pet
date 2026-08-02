@@ -23,6 +23,7 @@ interface IPlayerState {
     isPlaying: boolean;
     isLooped: boolean;
     currentTrackIndex: number;
+    likesId: number[]
 }
 
 const initialState: IPlayerState = {
@@ -30,7 +31,8 @@ const initialState: IPlayerState = {
     queue: [],
     isPlaying: false,
     isLooped: false,
-    currentTrackIndex: 0
+    currentTrackIndex: 0,
+    likesId: []
 }
 
 export const  playerSlice = createSlice({
@@ -48,6 +50,9 @@ export const  playerSlice = createSlice({
         },
         setIsLooped(state) {
             state.isLooped = !state.isLooped
+        },
+        setLikedTracks(state, action: PayloadAction<number[]>) {
+            state.likesId = action.payload
         },
         nextTrack(state) {
             const nextTrack = state.currentTrackIndex + 1
@@ -69,6 +74,14 @@ export const  playerSlice = createSlice({
                 state.currentTrackIndex =  lastIndex
                 state.currentTrack = state.queue[lastIndex]
             }
+        },
+        syncLikeState (state, action: PayloadAction<{trackId: number, isLiked: boolean}>) {
+            const { trackId, isLiked } = action.payload;
+            if (isLiked && !state.likesId.includes(trackId)) {
+                state.likesId.push(trackId);
+            } else if (!isLiked) {
+                state.likesId = state.likesId.filter(id => id !== trackId);
+            }
         }
     }
 })
@@ -76,9 +89,11 @@ export const  playerSlice = createSlice({
 export const {
  setCurrentTrack,
 setIsPlaying,
+setLikedTracks,
 nextTrack,
 previousTrack,
-setIsLooped
+setIsLooped,
+syncLikeState
 } = playerSlice.actions
 
 export default playerSlice.reducer
