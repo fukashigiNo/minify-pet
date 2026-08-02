@@ -1,15 +1,16 @@
 "use client"
 import { Heart } from "lucide-react"
-import Button from "./Button"
 import Icon from "./Icon"
-import { useState } from "react"
+import { useAppSelector } from "../store/hooks"
+import { useLikeTrack, ITrackData } from "../hooks/useLikeAction"
 
 interface IMusic {
-    id: number,
-    trackName: string,
-    trackAuthor: string,
-    trackLength: string,
-    handlePress: () => void
+    id: number;
+    trackName: string;
+    trackAuthor: string;
+    trackLength: string;
+    src: string;
+    handlePress: () => void;
 }
 
 export default function MusicCard({
@@ -17,12 +18,19 @@ export default function MusicCard({
     trackName,
     trackAuthor,
     trackLength,
+    src,
     handlePress
 }: IMusic) {
-    const [liked, setLiked]=useState<boolean>(true)
+    const likedId = useAppSelector(state => state.playerSlice.likesId)
+    const isInitiallyLiked = likedId.includes(id);
+
+    const trackData: ITrackData = { id, trackName, trackAuthor, trackLength, src };
+
+    const { isLiked, toggleLike } = useLikeTrack(trackData, isInitiallyLiked)
+
     return (
         <div className="flex justify-between items-center mt-4 bg-[#110d1bff] p-3 sm:p-4
-                border-b border-zinc-500/50 rounded-t-[10px] hover:bg-[#1d182bff]"
+                border-b border-zinc-500/50 rounded-t-[10px] hover:bg-[#1d182bff] cursor-pointer"
                 onClick={() => handlePress()}
             >
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -37,12 +45,20 @@ export default function MusicCard({
                         </div>
                     </div>
                 </div>
+
                 <div className="relative z-30 flex flex-col items-center shrink-0 ml-2">
-                    <Button className="cursor-pointer z-60" handlePress={() => setLiked(prev => !prev)}>
-                        { liked ? <Icon icon={Heart} size={16} color="#EF33E7" fill="#EF33E7" />:
-                        <Icon icon={Heart} size={16} color="#EF33E7" />
+                    <button 
+                        className="cursor-pointer z-60 p-2 transition-transform active:scale-90" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleLike();
+                        }}
+                    >
+                        { isLiked ? 
+                            <Icon icon={Heart} size={16} color="#EF33E7" fill="#EF33E7" /> :
+                            <Icon icon={Heart} size={16} color="#EF33E7" />
                         }
-                </Button>
+                    </button>
                 <p className="mt-2 sm:mt-4 text-[12px] sm:text-[13px] text-white/60">{trackLength}</p>
             </div>
         </div>
