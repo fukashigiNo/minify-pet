@@ -66,6 +66,7 @@ export default function Hero ({playlistId, playlistName, sumTracks, tracks}: IHe
                     <MusicCard 
                         key={item.id} 
                         id={item.id}  
+                        src={item.src}
                         trackName={item.trackName} 
                         trackAuthor={item.trackAuthor} 
                         trackLength={item.trackLength}
