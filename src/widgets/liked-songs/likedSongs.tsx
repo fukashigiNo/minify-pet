@@ -43,21 +43,22 @@ export default function LikedSongsPage() {
     }, []);
 
     return (
-        <div className="p-4 md:p-8 w-full min-h-screen text-white bg-[#0a0710]">
-            <div className="flex items-end gap-6 mb-8">
-                <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 bg-radial-[at_25%_25%] from-[#FF6BE7] to-[#EF33E7] to-75% rounded-[10px] shadow-[0_0_40px_rgba(255,107,231,0.3)] flex items-center justify-center">
-                    <Heart size={64} color="white" fill="white" />
+        <div className="p-4 sm:p-6 md:p-8 w-full min-h-screen text-white bg-[#0a0710]">
+            <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6 mb-8 text-center sm:text-left">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 shrink-0 bg-radial-[at_25%_25%] from-[#FF6BE7] to-[#EF33E7] to-75% rounded-[10px] shadow-[0_0_40px_rgba(255,107,231,0.3)] flex items-center justify-center">
+                    <Heart size={40} className="sm:hidden" color="white" fill="white" />
+                    <Heart size={64} className="hidden sm:block" color="white" fill="white" />
                 </div>
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm font-semibold tracking-widest text-white/70">PLAYLIST</p>
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter">Liked Songs</h1>
+                <div className="flex flex-col gap-1 sm:gap-2 items-center sm:items-start">
+                    <p className="text-xs sm:text-sm font-semibold tracking-widest text-white/70">PLAYLIST</p>
+                    <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">Liked Songs</h1>
                     <p className="text-white/60 text-sm">
                         {isLoading ? "Загрузка..." : `${likedTracks.length} tracks`}
                     </p>
                 </div>
             </div>
 
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col h-[70vh] sm:h-[500px] w-full overflow-y-auto scrollbar-custom mt-4 pr-1 sm:pr-2 gap-2 rounded-[16px]">
                 {isLoading ? (
                     <div className="text-center mt-20 text-white/50">
                         <p>Ищем твои любимые треки...</p>
