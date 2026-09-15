@@ -1,3 +1,30 @@
+# Minify
+
+Мини-версия Spotify — pet-проект на современном стеке.
+
+## О проекте
+
+Веб-приложение для прослушивания музыки.  
+Создано для практики Next.js 16, React 19, Redux Toolkit и работы с Supabase.
+
+## Стек
+
+- **Next.js 16** (App Router)
+- **React 19** + **TypeScript**
+- **Redux Toolkit** + React Redux
+- **Supabase**
+- Tailwind CSS 4
+- Lucide React
+- react-smart-action
+
+## Функционал
+
+- Воспроизведение треков
+- Работа с плейлистами
+- Интеграция с Supabase
+- Современный UI
+
+
 ```bash
 # Правила коммитов
 
