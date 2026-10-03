@@ -46,7 +46,7 @@ export default function PlayerBar ()  {
     useEffect(() => {
         if(!track?.src) return
 
-        audioEngine.setOnEnded(() => {
+        audioHTMLEngine.setOnEnded(() => {
                 dispatch(nextTrack())
             }
         )
