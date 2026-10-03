@@ -19,6 +19,7 @@ import {
 } from "@/components/store/slices"
 import { 
     audioEngine, 
+    audioHTMLEngine,
     updateMediaSessionMetaData, 
     setMediaSessionPlaybackState, 
     updateMediaSessionPosition, 
