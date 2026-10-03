@@ -40,7 +40,7 @@ export default function PlayerBar ()  {
     const toggleLoop = () => {
         const nextState = !isLoop
         dispatch(setIsLooped())
-        audioEngine.setIsLooped(nextState)
+        audioHTMLEngine.setIsLooped(nextState)
     }
     //uE 1
     useEffect(() => {
@@ -52,9 +52,9 @@ export default function PlayerBar ()  {
         )
 
         async function startAudio() {
-            await audioEngine.loadTrack(track!.src);
-            audioEngine.play()
-            setDuration(audioEngine.getDuration())
+            await audioHTMLEngine.loadTrack(track!.src);
+            audioHTMLEngine.play()
+            setDuration(audioHTMLEngine.getDuration())
         }
 
         startAudio()
@@ -64,7 +64,7 @@ export default function PlayerBar ()  {
         if(!isPlaying) return
 
         const interval = setInterval(() => {
-            setCurrentTIme(audioEngine.getCurrentTime())
+            setCurrentTIme(audioHTMLEngine.getCurrentTime())
         }, 200)
 
         return () => clearInterval(interval)
@@ -83,18 +83,18 @@ export default function PlayerBar ()  {
         })
         bindMediaSessionHandlers({
             play: () => {
-                audioEngine.play()
+                audioHTMLEngine.play()
                 dispatch(setPlay(true))
             },
             pause: () => {
-                audioEngine.pause() 
+                audioHTMLEngine.pause() 
                 dispatch(setPlay(false))
             },
             next: () => {dispatch(nextTrack())},
             previous: () => {dispatch(previousTrack())},
             seek: (time) => {
                 setCurrentTIme(time)
-                audioEngine.seek(time)
+                audioHTMLEngine.seek(time)
             },
         })
     }, [track?.id, dispatch])
@@ -103,7 +103,7 @@ export default function PlayerBar ()  {
         if(!isPlaying || !duration) return 
         
         const id = setInterval(() => {
-            updateMediaSessionPosition(audioEngine.getCurrentTime(), duration)
+            updateMediaSessionPosition(audioHTMLEngine.getCurrentTime(), duration)
         }, 1000)
 
         return () =>  clearInterval(id)
@@ -111,17 +111,17 @@ export default function PlayerBar ()  {
 
     const handleToggle = () => {
         if (isPlaying) {
-            audioEngine.pause()
+            audioHTMLEngine.pause()
             dispatch(setPlay(false))
         } else {
-            audioEngine.play()
+            audioHTMLEngine.play()
             dispatch(setPlay(true))
         }
     }
 
     const handleChangeVolume = (newVolume: number) => {
         setVolume(newVolume);
-        audioEngine.setVolume(newVolume)
+        audioHTMLEngine.setVolume(newVolume)
     }
 
     if(!track) return null
@@ -155,7 +155,7 @@ export default function PlayerBar ()  {
                 duration={duration}
                 seek={(newTime) => {
                     setCurrentTIme(newTime)
-                    audioEngine.seek(newTime)
+                    audioHTMLEngine.seek(newTime)
                 }}
             />
         </div>
