@@ -3,15 +3,28 @@ class AudioHTMLEngine {
 
     async loadTrack(url: string) {
         if (!this.audio) return 
-        this.audio.src = url
-        this.audio.load()
+        const audio = this.audio
+        const metadataLoaded = new Promise<void>((resolve) => {
+            const finish = () => {
+                audio.removeEventListener("loadedmetadata", finish)
+                audio.removeEventListener("error", finish)
+                resolve()
+            }
+
+            audio.addEventListener("loadedmetadata", finish, { once: true })
+            audio.addEventListener("error", finish, { once: true })
+        })
+
+        audio.src = url
+        audio.load()
+        await metadataLoaded
     }
 
     play() {
         void this.audio?.play()
     }
 
-    pausa() {
+    pause() {
         void this.audio?.pause()
     }
 
@@ -31,8 +44,8 @@ class AudioHTMLEngine {
         return this.audio?.duration ?? 0
     }
 
-    setIsLooped() {
-        
+    setIsLooped(value: boolean) {
+        if(this.audio) this.audio.loop = value
     }
 }
 
