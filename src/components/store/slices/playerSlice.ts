@@ -48,6 +48,9 @@ export const  playerSlice = createSlice({
         setIsPlaying(state) {
             state.isPlaying = !state.isPlaying
         },
+        setPlay(state, action: PayloadAction<boolean>) {
+            state.isPlaying = action.payload
+        },
         setIsLooped(state) {
             state.isLooped = !state.isLooped
         },
@@ -89,6 +92,7 @@ export const  playerSlice = createSlice({
 export const {
  setCurrentTrack,
 setIsPlaying,
+setPlay,
 setLikedTracks,
 nextTrack,
 previousTrack,
