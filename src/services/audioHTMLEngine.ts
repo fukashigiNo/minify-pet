@@ -30,6 +30,10 @@ class AudioHTMLEngine {
     getDuration() {
         return this.audio?.duration ?? 0
     }
+
+    setIsLooped() {
+        
+    }
 }
 
 export const audioHTMLEngine = new AudioHTMLEngine()
