@@ -17,9 +17,9 @@ export function updateMediaSessionMetaData( track: ITrackMeta ) {
         album: "I.H.T.W c I'M.F.I",
         artwork: track.photo 
         ? [
-                { src: track.photo, sizes: "96x96", type: "" },
-                { src: track.photo, sizes: "256x256", type: "" },
-                { src: track.photo, sizes: "512x512", type: "" },
+            { src: track.photo, sizes: "96x96" },
+            { src: track.photo, sizes: "256x256" },
+            { src: track.photo, sizes: "512x512" },
             ] : []
     })
 }
