@@ -1,9 +1,29 @@
 "use client"
 import { Button, Icon, SeekBar, VolumeBar } from "@/components/global"
-import { Play, Pause, SkipForward, SkipBack, Repeat, VolumeX, Volume1 } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/components/store/hooks"
-import { previousTrack, nextTrack, setIsPlaying, setIsLooped } from "@/components/store/slices"
-import { audioEngine } from "@/services"
+import { 
+    Play, 
+    Pause, 
+    SkipForward, 
+    SkipBack, 
+    Repeat, 
+    VolumeX, 
+    Volume1 
+} from "lucide-react"
+import { 
+    previousTrack, 
+    nextTrack, 
+    setIsPlaying, 
+    setIsLooped, 
+    setPlay 
+} from "@/components/store/slices"
+import { 
+    audioEngine, 
+    updateMediaSessionMetaData, 
+    setMediaSessionPlaybackState, 
+    updateMediaSessionPosition, 
+    bindMediaSessionHandlers 
+} from "@/services"
 import { useEffect, useState } from "react"
 
 export default function PlayerBar ()  {
@@ -21,7 +41,7 @@ export default function PlayerBar ()  {
         dispatch(setIsLooped())
         audioEngine.setIsLooped(nextState)
     }
-
+    //uE 1
     useEffect(() => {
         if(!track?.src) return
 
@@ -38,7 +58,7 @@ export default function PlayerBar ()  {
 
         startAudio()
     }, [track?.src])
-
+    //uE 2
     useEffect(() => {
         if(!isPlaying) return
 
@@ -48,20 +68,61 @@ export default function PlayerBar ()  {
 
         return () => clearInterval(interval)
     }, [isPlaying])
+    // uE 3
+    useEffect(() => {
+        setMediaSessionPlaybackState(isPlaying)
+    }, [isPlaying])
+    //uE 4
+    useEffect(() => {
+        if( !track ) return
+        updateMediaSessionMetaData({
+            trackName: track.trackName,
+            trackAuthor: track.trackAuthor,
+            photo: track.photo
+        })
+        bindMediaSessionHandlers({
+            play: () => {
+                audioEngine.play()
+                dispatch(setPlay(true))
+            },
+            pause: () => {
+                audioEngine.pause() 
+                dispatch(setPlay(false))
+            },
+            next: () => {dispatch(nextTrack())},
+            previous: () => {dispatch(previousTrack())},
+            seek: (time) => {
+                setCurrentTIme(time)
+                audioEngine.seek(time)
+            },
+        })
+    }, [track?.id, dispatch])
+    //uE 5
+    useEffect(() => {
+        if(!isPlaying || !duration) return 
+        
+        const id = setInterval(() => {
+            updateMediaSessionPosition(audioEngine.getCurrentTime(), duration)
+        }, 1000)
+
+        return () =>  clearInterval(id)
+    }, [isPlaying, duration])
 
     const handleToggle = () => {
         if (isPlaying) {
             audioEngine.pause()
+            dispatch(setPlay(false))
         } else {
             audioEngine.play()
+            dispatch(setPlay(true))
         }
-        dispatch(setIsPlaying())
     }
 
     const handleChangeVolume = (newVolume: number) => {
         setVolume(newVolume);
         audioEngine.setVolume(newVolume)
     }
+
     if(!track) return null
 
   return (
