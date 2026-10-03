@@ -44,6 +44,10 @@ class AudioHTMLEngine {
         return this.audio?.duration ?? 0
     }
 
+    setOnEnded(callback: () => void) {
+        if (this.audio) this.audio.onended = callback
+    }
+
     setIsLooped(value: boolean) {
         if(this.audio) this.audio.loop = value
     }
