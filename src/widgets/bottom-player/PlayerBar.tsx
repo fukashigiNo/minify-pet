@@ -55,7 +55,6 @@ export default function PlayerBar ()  {
             await audioHTMLEngine.loadTrack(track!.src);
             audioHTMLEngine.play()
             setDuration(audioHTMLEngine.getDuration())
-            setMediaSessionPlaybackState(true)
         }
 
         startAudio()
